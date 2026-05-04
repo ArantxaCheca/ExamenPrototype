@@ -54,13 +54,13 @@ app.patch("/products/:id", (req, res) => {
     return res.status(404).json({ message: "Product not found" });
   }
 
-  product.name = req.body.name ?? product.name;
-  product.price = req.body.price ?? product.price;
-  product.stock = req.body.stock ?? product.stock;
-  product.is_active = req.body.is_active ?? product.is_active;
-  product.updated_at = new Date();
+  product.name = req.body.name ?? product.name; // Solo actualizamos el campo si se proporciona en el body.
+  product.price = req.body.price ?? product.price; // El operador nullish coalescing (??) asegura que si el valor es null o undefined, se mantenga el valor actual.
+  product.stock = req.body.stock ?? product.stock; // De esta forma, si el cliente no envía un campo, no se sobrescribirá con undefined.
+  product.is_active = req.body.is_active ?? product.is_active; // Lo mismo para el campo is_active.
+  product.updated_at = new Date(); // Actualizamos la fecha de actualización.
 
-  res.json(product);
+  res.json(product); // Devolvemos el producto actualizado.
 });
 
 // DELETE /products/:id: elimina un producto por su id.
